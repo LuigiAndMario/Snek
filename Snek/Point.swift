@@ -9,6 +9,9 @@
 import Foundation
 
 struct Point {
+    
+    // MARK: Properties
+    
     var x: Int
     var y: Int
 }

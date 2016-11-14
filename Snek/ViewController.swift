@@ -21,13 +21,19 @@ class ViewController: UIViewController, SnekViewDelegate {
     var snek: Snek?
     var fruit: Point?
     var gameState: GameState = GameState.notPlaying
-    var score: Int = 0
+    var score: Score?
+    var fruitsEaten: Int = 0
+    var name: String?
+    var league: Leaderboard?
     
     
     // MARK: Overrides
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Creates the leaderboard
+        var league = Leaderboard()
         
         // Defining the box in which the snek will evolve
         // The size of the frame is as defined in the storyboard
@@ -143,7 +149,7 @@ class ViewController: UIViewController, SnekViewDelegate {
     }
     
     func updateScore() {
-        score = snek!.fruitsEaten
+        self.fruitsEaten = snek!.fruitsEaten
         scoreCounter.text = String(snek!.fruitsEaten)
     }
     
@@ -220,7 +226,44 @@ class ViewController: UIViewController, SnekViewDelegate {
         gameBox.backgroundColor? = UIColor.lightGray.withAlphaComponent(0.5)
         
         gameState = GameState.gameOver
-        score = snek!.fruitsEaten
+        
+        // Creating the score
+        let namePrompt = UIAlertController(title: "Wow, nicely done!", message: "You've got a new high score!", preferredStyle: UIAlertControllerStyle.alert)
+        namePrompt.addTextField { (nameField) in
+            nameField.text = UIDevice.current.name
+        }
+        namePrompt.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: { (_) in
+            self.name = namePrompt.textFields![0].text
+        }))
+        
+        self.present(namePrompt, animated: true, completion: nil)
+        
+    }
+    
+    // MARK: Score
+    
+    /// Inserts the score in the leaderboard if needed
+    func handleScore() {
+        // Adding the score
+        if league!.newHighScore(newResult: fruitsEaten) {
+            // Creating the score
+            let namePrompt = UIAlertController(title: "Wow, nicely done!", message: "You've got a new high score!", preferredStyle: UIAlertControllerStyle.alert)
+            namePrompt.addTextField { (nameField) in
+                nameField.text = UIDevice.current.name
+            }
+            namePrompt.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: { (_) in
+                self.name = namePrompt.textFields![0].text
+                self.league!.addScore(newScore: Score(result: self.fruitsEaten, nameOfPlayer: self.name!))
+            }))
+            
+            self.present(namePrompt, animated: true, completion: nil)
+            
+            showLeaderboard()
+        }
+    }
+    
+    func showLeaderboard() {
+        
     }
     
     // MARK: Inheritance

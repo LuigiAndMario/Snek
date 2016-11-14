@@ -40,12 +40,16 @@ class Snek {
     
     // MARK: Movement
     
+    /// Moves the snek
+    ///
+    /// Delegates to Direction.move()
     func move() {
         self.points.removeLast()
         let head = self.direction.move(from: points[0], world: self.world)
         self.points.insert(head, at: 0)
     }
     
+    /// Changes the direction of the snek
     func changeDirection(newDirection: Direction) {
         if self.direction.canChangeTo(newDirection: newDirection) && !lockedDirection {
             //self.direction = newDirection
@@ -67,6 +71,7 @@ class Snek {
         }
     }
     
+    /// Increses the size of the snek
     func increaseSize(amountToAdd: Int) {
         let endOfTail: Point = points[length - 1]
         let oneBeforeEndOfTail: Point = points[length - 2]
@@ -95,6 +100,7 @@ class Snek {
     
     // MARK: Die
     
+    /// Returns a boolean indicating whether the snek has collided with its body or not
     func die() -> Bool {
         let head = points[0]
         let x = head.x

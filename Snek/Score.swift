@@ -9,8 +9,13 @@
 import Foundation
 
 class Score {
+    
+    // MARK: Properties
+    
     var result: Int?
     var nameOfPlayer: String?
+    
+    // MARK: Initializer
     
     init(result: Int, nameOfPlayer: String) {
         self.result = result

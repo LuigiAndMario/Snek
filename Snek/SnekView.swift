@@ -14,7 +14,7 @@ class SnekView : UIView {
     
     var delegate: SnekViewDelegate?
     
-    // MARK: Initialisers
+    // MARK: Initializers
     
     required init(coder: NSCoder) {
         super.init(coder: coder)!
@@ -28,6 +28,7 @@ class SnekView : UIView {
     
     // MARK: Drawing
     
+    /// Draws the world in which the snek will evolve, the snek itself and the fruit
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         if let snek: Snek = delegate?.snekForSnekView(view: self) {

@@ -83,6 +83,27 @@
 			name = Score;
 			sourceTree = "<group>";
 		};
+		2A48D39D1DD9BAEB00EE6F1A /* Game Items */ = {
+			isa = PBXGroup;
+			children = (
+				2A909E341DD8FDD600A2196C /* GameState.swift */,
+				2A806A081DD7885B0050D76E /* Snek.swift */,
+				2A806A0A1DD7887A0050D76E /* World.swift */,
+				2A806A0C1DD7888A0050D76E /* Point.swift */,
+				2A806A0E1DD788A20050D76E /* Direction.swift */,
+			);
+			name = "Game Items";
+			sourceTree = "<group>";
+		};
+		2A48D39E1DD9BB0D00EE6F1A /* Graphics */ = {
+			isa = PBXGroup;
+			children = (
+				2A806A101DD794350050D76E /* SnekView.swift */,
+				2A806A121DD794430050D76E /* SnekViewDelegate.swift */,
+			);
+			name = Graphics;
+			sourceTree = "<group>";
+		};
 		2ACCE4321DD784BA0092FFD8 = {
 			isa = PBXGroup;
 			children = (
@@ -104,16 +125,11 @@
 		2ACCE43D1DD784BA0092FFD8 /* Snek */ = {
 			isa = PBXGroup;
 			children = (
-				2A806A081DD7885B0050D76E /* Snek.swift */,
-				2A806A101DD794350050D76E /* SnekView.swift */,
-				2A806A121DD794430050D76E /* SnekViewDelegate.swift */,
-				2A806A0A1DD7887A0050D76E /* World.swift */,
-				2A806A0C1DD7888A0050D76E /* Point.swift */,
-				2A806A0E1DD788A20050D76E /* Direction.swift */,
+				2A48D39E1DD9BB0D00EE6F1A /* Graphics */,
+				2A48D39D1DD9BAEB00EE6F1A /* Game Items */,
 				2ACCE43E1DD784BA0092FFD8 /* AppDelegate.swift */,
 				2ACCE4401DD784BA0092FFD8 /* ViewController.swift */,
 				2A48D39C1DD9A9E900EE6F1A /* Score */,
-				2A909E341DD8FDD600A2196C /* GameState.swift */,
 				2ACCE4421DD784BA0092FFD8 /* Main.storyboard */,
 				2ACCE4451DD784BA0092FFD8 /* Assets.xcassets */,
 				2ACCE4471DD784BA0092FFD8 /* LaunchScreen.storyboard */,

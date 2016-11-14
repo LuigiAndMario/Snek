@@ -24,7 +24,7 @@ class ViewController: UIViewController, SnekViewDelegate {
     var score: Int = 0
     
     
-    // MARK : Overrides
+    // MARK: Overrides
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +67,7 @@ class ViewController: UIViewController, SnekViewDelegate {
 
     // MARK: Gestures
     
+    /// Recognizes the gesture sent
     func swipe(gestureRecognizer: UISwipeGestureRecognizer) {
         switch gestureRecognizer.direction {
         case UISwipeGestureRecognizerDirection.left:
@@ -232,4 +233,3 @@ class ViewController: UIViewController, SnekViewDelegate {
         return fruit
     }
 }
-

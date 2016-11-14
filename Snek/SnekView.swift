@@ -26,7 +26,7 @@ class SnekView : UIView {
         self.backgroundColor = UIColor.white
     }
     
-    // MARK: drawing
+    // MARK: Drawing
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)

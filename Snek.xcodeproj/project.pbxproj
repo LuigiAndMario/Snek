@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A48D3981DD99B4600EE6F1A /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A48D3971DD99B4600EE6F1A /* Score.swift */; };
+		2A48D39A1DD9A76600EE6F1A /* Leaderboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A48D3991DD9A76600EE6F1A /* Leaderboard.swift */; };
 		2A806A091DD7885B0050D76E /* Snek.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A806A081DD7885B0050D76E /* Snek.swift */; };
 		2A806A0B1DD7887A0050D76E /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A806A0A1DD7887A0050D76E /* World.swift */; };
 		2A806A0D1DD7888A0050D76E /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A806A0C1DD7888A0050D76E /* Point.swift */; };
@@ -33,6 +35,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2A48D3971DD99B4600EE6F1A /* Score.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
+		2A48D3991DD9A76600EE6F1A /* Leaderboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Leaderboard.swift; sourceTree = "<group>"; };
 		2A806A081DD7885B0050D76E /* Snek.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snek.swift; sourceTree = "<group>"; };
 		2A806A0A1DD7887A0050D76E /* World.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
 		2A806A0C1DD7888A0050D76E /* Point.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
@@ -70,6 +74,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A48D39C1DD9A9E900EE6F1A /* Score */ = {
+			isa = PBXGroup;
+			children = (
+				2A48D3991DD9A76600EE6F1A /* Leaderboard.swift */,
+				2A48D3971DD99B4600EE6F1A /* Score.swift */,
+			);
+			name = Score;
+			sourceTree = "<group>";
+		};
 		2ACCE4321DD784BA0092FFD8 = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +112,7 @@
 				2A806A0E1DD788A20050D76E /* Direction.swift */,
 				2ACCE43E1DD784BA0092FFD8 /* AppDelegate.swift */,
 				2ACCE4401DD784BA0092FFD8 /* ViewController.swift */,
+				2A48D39C1DD9A9E900EE6F1A /* Score */,
 				2A909E341DD8FDD600A2196C /* GameState.swift */,
 				2ACCE4421DD784BA0092FFD8 /* Main.storyboard */,
 				2ACCE4451DD784BA0092FFD8 /* Assets.xcassets */,
@@ -224,8 +238,10 @@
 			files = (
 				2A806A131DD794430050D76E /* SnekViewDelegate.swift in Sources */,
 				2ACCE4411DD784BA0092FFD8 /* ViewController.swift in Sources */,
+				2A48D39A1DD9A76600EE6F1A /* Leaderboard.swift in Sources */,
 				2A806A111DD794350050D76E /* SnekView.swift in Sources */,
 				2A806A0D1DD7888A0050D76E /* Point.swift in Sources */,
+				2A48D3981DD99B4600EE6F1A /* Score.swift in Sources */,
 				2ACCE43F1DD784BA0092FFD8 /* AppDelegate.swift in Sources */,
 				2A806A0B1DD7887A0050D76E /* World.swift in Sources */,
 				2A806A091DD7885B0050D76E /* Snek.swift in Sources */,

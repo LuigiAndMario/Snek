@@ -19,9 +19,9 @@ class Leaderboard {
     
     init() {
         self.league = []
-        //for i in 0..<Leaderboard.amount {
-        //    league.insert(Score(result: 0, nameOfPlayer: ""), at: i)
-        //}
+        for i in 0..<Leaderboard.amount {
+            league.insert(Score(result: 0, nameOfPlayer: ""), at: i)
+        }
     }
     
     // MARK: Browsing
@@ -40,8 +40,7 @@ class Leaderboard {
     /// Returns a displayable version of the leaderboard
     func show() -> String {
         var s: String = ""
-        let upTo = Math.min(a: Leaderboard.amount, b: league.count)
-        for i in 0..<upTo {
+        for i in 0..<Leaderboard.amount {
             let currentScore = league[i]
             s = String(i) + ".  "
             s += currentScore.nameOfPlayer! + " : "
@@ -67,8 +66,7 @@ class Leaderboard {
         let newResult = newScore.result!
         
         // Inserts the current score in the league
-        let upTo = Math.min(a: Leaderboard.amount, b: league.count)
-        for i in 0..<upTo {
+        for i in 0..<Leaderboard.amount {
             if !inserted {
                 let currentResult: Score = self.league[i]
                 if newResult >= currentResult.result! {
@@ -86,8 +84,7 @@ class Leaderboard {
     /// Cuts all the scores after the last one of the leaderboard
     func cut() {
         var newLeague: [Score] = []
-        let upTo = Math.min(a: Leaderboard.amount, b: league.count)
-        for i in 0..<upTo {
+        for i in 0..<Leaderboard.amount {
             newLeague.insert(self.league[i], at: i)
         }
         

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, SnekViewDelegate {
+class GameViewController: UIViewController, SnekViewDelegate {
     
     // MARK: Properties
     
@@ -16,8 +16,8 @@ class ViewController: UIViewController, SnekViewDelegate {
     @IBOutlet weak var restartButton: UIButton!
     @IBOutlet weak var gameBox: UIView!
     @IBOutlet weak var scoreCounter: UILabel!
-    @IBOutlet weak var displayableLeaderboard: UITextField!
     @IBOutlet weak var dieButton: UIButton!
+    @IBOutlet weak var leaderboardBarButton: UIBarButtonItem!
     var snekView: SnekView?
     var timer: Timer?
     var snek: Snek?
@@ -25,8 +25,6 @@ class ViewController: UIViewController, SnekViewDelegate {
     var gameState: GameState = GameState.notPlaying
     var score: Score?
     var fruitsEaten: Int?
-    var name: String?
-    var leaderboard: Leaderboard?
     
     
     // MARK: Overrides
@@ -34,29 +32,33 @@ class ViewController: UIViewController, SnekViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Creates the leaderboard
-        self.leaderboard = Leaderboard()
-        displayableLeaderboard.isHidden = true
-        
         // Defining the box in which the snek will evolve
         // The size of the frame is as defined in the storyboard
-        let frame = CGRect(x: 13, y: 120, width: 350, height: 350)
+        let frame = CGRect(x: 13, y: 164, width: 350, height: 350)
         
         // Setting the score counter to an empty string before staring to play
-        scoreCounter.text = String("")
+        scoreCounter.text = " "
         self.fruitsEaten = 0
         
         // Hiding the restart button
-        restartButton.isHidden = true
+        self.restartButton.isHidden = true
         
-        // Hiding the hide button if not in debug mode
-        dieButton.isHidden = false
+        // Creating the leaderbord button
+        self.leaderboardBarButton = UIBarButtonItem(
+            title: "Leaderboard",
+            style: .plain,
+            target: self,
+            action: #selector(leaderboardBarButtonAction(_:))
+        )
         
-        gameBox.frame = frame
-        gameBox.layer.borderColor = UIColor.black.cgColor
-        gameBox.layer.borderWidth = 1.0
+        // Hiding the die button if not in debug mode
+        self.dieButton.isHidden = false
+        
+        self.gameBox.frame = frame
+        self.gameBox.layer.borderColor = UIColor.black.cgColor
+        self.gameBox.layer.borderWidth = 1.0
         // The background is set to a fully transparent gray in order to gray it out on a game over screen by increasing the alpha component
-        gameBox.layer.backgroundColor = UIColor.lightGray.withAlphaComponent(0.0).cgColor
+        self.gameBox.layer.backgroundColor = UIColor.white.withAlphaComponent(0.0).cgColor
         
         snekView = SnekView(frame: frame)
         // snekView!.autoresizingMask = .FlexibleWidth | .FlexibleHeight
@@ -188,7 +190,6 @@ class ViewController: UIViewController, SnekViewDelegate {
         restartButton.isHidden = true
         self.fruitsEaten = 0
         scoreCounter.text = String(describing: self.fruitsEaten!)
-        displayableLeaderboard.isHidden = true
         
         // If the timer is not nil, then we have a problem
         if timer != nil {
@@ -232,12 +233,12 @@ class ViewController: UIViewController, SnekViewDelegate {
         timer!.invalidate()
         timer = nil
         
-        gameBox.backgroundColor? = UIColor.lightGray.withAlphaComponent(0.5)
+        gameBox.backgroundColor? = UIColor.red.withAlphaComponent(0.5)
         
         gameState = GameState.gameOver
         
-        handleScore()
-        showLeaderboard()
+        // Segue for the leaderboard
+        performSegue(withIdentifier: "gameToLeaderboard", sender: nil)
     }
     
     /// For debugging purposes only
@@ -247,29 +248,12 @@ class ViewController: UIViewController, SnekViewDelegate {
         endGame()
     }
     
-    // MARK: Score
-    
-    /// Inserts the score in the leaderboard if needed
-    func handleScore() {
-        // Adding the score
-        if leaderboard!.newHighScore(newResult: fruitsEaten!) {
-            // Creating the score
-            let namePrompt = UIAlertController(title: "Wow, nicely done!", message: "You've got a new high score!", preferredStyle: UIAlertControllerStyle.alert)
-            namePrompt.addTextField { (nameField) in
-                nameField.text = UIDevice.current.name
-            }
-            namePrompt.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: { (_) in
-                self.name = namePrompt.textFields![0].text
-                self.leaderboard!.addScore(newScore: Score(result: self.fruitsEaten!, nameOfPlayer: self.name!))
-            }))
-            
-            self.present(namePrompt, animated: true, completion: nil)
+    /// Pauses the game before sending the user to the leaderboard view
+    @IBAction func leaderboardBarButtonAction(_ sender: UIBarButtonItem) {
+        // If the game is running, we pause it before going any further
+        if gameState == GameState.playing {
+            pauseGame()
         }
-    }
-    
-    func showLeaderboard() {
-        self.displayableLeaderboard.text = leaderboard?.show()
-        displayableLeaderboard.isHidden = false
     }
     
     // MARK: Inheritance

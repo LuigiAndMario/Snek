@@ -22,18 +22,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mlQ-6g-Ou1" userLabel="Start And Pause Button">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mlQ-6g-Ou1" userLabel="Start And Pause Button">
                                 <rect key="frame" x="141" y="526" width="93" height="30"/>
                                 <state key="normal" title="Start Playing!"/>
                                 <connections>
                                     <action selector="buttonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="G5y-Rv-PXX"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ubq-YW-qWC">
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ubq-YW-qWC">
                                 <rect key="frame" x="13" y="120" width="350" height="350"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5OQ-NE-Ib7">
+                                        <rect key="frame" x="0.0" y="0.0" width="350" height="350"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="5OQ-NE-Ib7" secondAttribute="bottom" id="Srt-YX-OSF"/>
+                                    <constraint firstItem="5OQ-NE-Ib7" firstAttribute="leading" secondItem="Ubq-YW-qWC" secondAttribute="leading" id="XJH-Wc-I47"/>
+                                    <constraint firstItem="5OQ-NE-Ib7" firstAttribute="top" secondItem="Ubq-YW-qWC" secondAttribute="top" id="onn-uA-ecb"/>
+                                    <constraint firstAttribute="trailing" secondItem="5OQ-NE-Ib7" secondAttribute="trailing" id="ys2-q3-Tnm"/>
+                                </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wv5-0v-iNf">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wv5-0v-iNf">
                                 <rect key="frame" x="162" y="564" width="51" height="30"/>
                                 <state key="normal" title="Restart"/>
                                 <connections>
@@ -46,6 +60,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xqB-zZ-6ih">
+                                <rect key="frame" x="172" y="602" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Die"/>
+                                <connections>
+                                    <action selector="dieButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iBF-Y5-JUM"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -65,6 +87,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="dieButton" destination="xqB-zZ-6ih" id="JYX-Pv-5XX"/>
+                        <outlet property="displayableLeaderboard" destination="5OQ-NE-Ib7" id="cLM-o2-RhC"/>
                         <outlet property="gameBox" destination="Ubq-YW-qWC" id="P2T-aS-6PV"/>
                         <outlet property="restartButton" destination="Wv5-0v-iNf" id="kRT-r0-vgJ"/>
                         <outlet property="scoreCounter" destination="YZB-we-00W" id="zft-Rn-bqe"/>

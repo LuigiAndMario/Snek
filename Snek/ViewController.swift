@@ -16,15 +16,17 @@ class ViewController: UIViewController, SnekViewDelegate {
     @IBOutlet weak var restartButton: UIButton!
     @IBOutlet weak var gameBox: UIView!
     @IBOutlet weak var scoreCounter: UILabel!
+    @IBOutlet weak var displayableLeaderboard: UITextField!
+    @IBOutlet weak var dieButton: UIButton!
     var snekView: SnekView?
     var timer: Timer?
     var snek: Snek?
     var fruit: Point?
     var gameState: GameState = GameState.notPlaying
     var score: Score?
-    var fruitsEaten: Int = 0
+    var fruitsEaten: Int?
     var name: String?
-    var league: Leaderboard?
+    var leaderboard: Leaderboard?
     
     
     // MARK: Overrides
@@ -33,7 +35,8 @@ class ViewController: UIViewController, SnekViewDelegate {
         super.viewDidLoad()
         
         // Creates the leaderboard
-        var league = Leaderboard()
+        self.leaderboard = Leaderboard()
+        displayableLeaderboard.isHidden = true
         
         // Defining the box in which the snek will evolve
         // The size of the frame is as defined in the storyboard
@@ -41,9 +44,13 @@ class ViewController: UIViewController, SnekViewDelegate {
         
         // Setting the score counter to an empty string before staring to play
         scoreCounter.text = String("")
+        self.fruitsEaten = 0
         
         // Hiding the restart button
         restartButton.isHidden = true
+        
+        // Hiding the hide button if not in debug mode
+        dieButton.isHidden = false
         
         gameBox.frame = frame
         gameBox.layer.borderColor = UIColor.black.cgColor
@@ -150,7 +157,7 @@ class ViewController: UIViewController, SnekViewDelegate {
     
     func updateScore() {
         self.fruitsEaten = snek!.fruitsEaten
-        scoreCounter.text = String(snek!.fruitsEaten)
+        scoreCounter.text = String(describing: fruitsEaten!)
     }
     
     // MARK: Button Actions
@@ -179,7 +186,9 @@ class ViewController: UIViewController, SnekViewDelegate {
     func startGame() {
         startAndPauseButton.setTitle("Pause", for: .normal)
         restartButton.isHidden = true
-        scoreCounter.text = String("0")
+        self.fruitsEaten = 0
+        scoreCounter.text = String(describing: self.fruitsEaten!)
+        displayableLeaderboard.isHidden = true
         
         // If the timer is not nil, then we have a problem
         if timer != nil {
@@ -227,17 +236,15 @@ class ViewController: UIViewController, SnekViewDelegate {
         
         gameState = GameState.gameOver
         
-        // Creating the score
-        let namePrompt = UIAlertController(title: "Wow, nicely done!", message: "You've got a new high score!", preferredStyle: UIAlertControllerStyle.alert)
-        namePrompt.addTextField { (nameField) in
-            nameField.text = UIDevice.current.name
-        }
-        namePrompt.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: { (_) in
-            self.name = namePrompt.textFields![0].text
-        }))
-        
-        self.present(namePrompt, animated: true, completion: nil)
-        
+        handleScore()
+        showLeaderboard()
+    }
+    
+    /// For debugging purposes only
+    ///
+    /// Abruptly ends the game
+    @IBAction func dieButtonAction(_ sender: UIButton) {
+        endGame()
     }
     
     // MARK: Score
@@ -245,7 +252,7 @@ class ViewController: UIViewController, SnekViewDelegate {
     /// Inserts the score in the leaderboard if needed
     func handleScore() {
         // Adding the score
-        if league!.newHighScore(newResult: fruitsEaten) {
+        if leaderboard!.newHighScore(newResult: fruitsEaten!) {
             // Creating the score
             let namePrompt = UIAlertController(title: "Wow, nicely done!", message: "You've got a new high score!", preferredStyle: UIAlertControllerStyle.alert)
             namePrompt.addTextField { (nameField) in
@@ -253,17 +260,16 @@ class ViewController: UIViewController, SnekViewDelegate {
             }
             namePrompt.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: { (_) in
                 self.name = namePrompt.textFields![0].text
-                self.league!.addScore(newScore: Score(result: self.fruitsEaten, nameOfPlayer: self.name!))
+                self.leaderboard!.addScore(newScore: Score(result: self.fruitsEaten!, nameOfPlayer: self.name!))
             }))
             
             self.present(namePrompt, animated: true, completion: nil)
-            
-            showLeaderboard()
         }
     }
     
     func showLeaderboard() {
-        
+        self.displayableLeaderboard.text = leaderboard?.show()
+        displayableLeaderboard.isHidden = false
     }
     
     // MARK: Inheritance

@@ -76,7 +76,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Leaderboard" id="MRS-k6-jpf">
                             <connections>
                                 <action selector="leaderboardBarButtonAction:" destination="BYZ-38-t0r" id="zZY-7h-tJK"/>
-                                <segue destination="OQa-Iw-dAd" kind="show" identifier="gameToLeaderboard" id="801-es-IQR"/>
+                                <segue destination="OQa-Iw-dAd" kind="show" identifier="gameToLeaderboardSegue" id="801-es-IQR"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

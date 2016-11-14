@@ -22,9 +22,12 @@ class GameViewController: UIViewController, SnekViewDelegate {
     var timer: Timer?
     var snek: Snek?
     var fruit: Point?
+    /// Represents the sate of the game, which is either not playing, playing, paused or finished.
     var gameState: GameState = GameState.notPlaying
-    var score: Score?
+    /// Constantly changes through the game.
     var fruitsEaten: Int?
+    /// Only changes when the game is started or ends.
+    var score: Int?
     
     
     // MARK: Overrides
@@ -39,17 +42,10 @@ class GameViewController: UIViewController, SnekViewDelegate {
         // Setting the score counter to an empty string before staring to play
         scoreCounter.text = " "
         self.fruitsEaten = 0
+        self.score = 0
         
         // Hiding the restart button
         self.restartButton.isHidden = true
-        
-        // Creating the leaderbord button
-        self.leaderboardBarButton = UIBarButtonItem(
-            title: "Leaderboard",
-            style: .plain,
-            target: self,
-            action: #selector(leaderboardBarButtonAction(_:))
-        )
         
         // Hiding the die button if not in debug mode
         self.dieButton.isHidden = false
@@ -57,7 +53,6 @@ class GameViewController: UIViewController, SnekViewDelegate {
         self.gameBox.frame = frame
         self.gameBox.layer.borderColor = UIColor.black.cgColor
         self.gameBox.layer.borderWidth = 1.0
-        // The background is set to a fully transparent gray in order to gray it out on a game over screen by increasing the alpha component
         self.gameBox.layer.backgroundColor = UIColor.white.withAlphaComponent(0.0).cgColor
         
         snekView = SnekView(frame: frame)
@@ -188,7 +183,7 @@ class GameViewController: UIViewController, SnekViewDelegate {
     func startGame() {
         startAndPauseButton.setTitle("Pause", for: .normal)
         restartButton.isHidden = true
-        self.fruitsEaten = 0
+        self.score = 0
         scoreCounter.text = String(describing: self.fruitsEaten!)
         
         // If the timer is not nil, then we have a problem
@@ -233,26 +228,43 @@ class GameViewController: UIViewController, SnekViewDelegate {
         timer!.invalidate()
         timer = nil
         
-        gameBox.backgroundColor? = UIColor.red.withAlphaComponent(0.5)
+        gameBox.backgroundColor? = UIColor.red.withAlphaComponent(0.3)
         
         gameState = GameState.gameOver
         
+        self.score = fruitsEaten
+        self.fruitsEaten = 0
+        
         // Segue for the leaderboard
-        performSegue(withIdentifier: "gameToLeaderboard", sender: nil)
+        performSegue(withIdentifier: "gameToLeaderboardSegue", sender: nil)
     }
     
-    /// For debugging purposes only
+    /// For debugging purposes only.
     ///
-    /// Abruptly ends the game
+    /// Abruptly ends the game.
+    ///
+    /// Does not perform any check on the game state, which might lead to errors.
     @IBAction func dieButtonAction(_ sender: UIButton) {
         endGame()
     }
     
-    /// Pauses the game before sending the user to the leaderboard view
-    @IBAction func leaderboardBarButtonAction(_ sender: UIBarButtonItem) {
-        // If the game is running, we pause it before going any further
+    // MARK: Segue
+    
+    /// Prepares the correct action for the segue
+    ///
+    /// Namely, if the game is currently running, pauses it and if the game is done, sets the result of the leaderboardViewController.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if gameState == GameState.playing {
+            // Pauses the game if it is currently running
             pauseGame()
+        }
+        
+        if let destinationVC = segue.destination as? LeaderboardViewController {
+            if gameState != GameState.gameOver {
+                destinationVC.receivedResult = -1
+            } else {
+                destinationVC.receivedResult = self.score
+            }
         }
     }
     

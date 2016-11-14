@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A806A091DD7885B0050D76E /* Snek.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A806A081DD7885B0050D76E /* Snek.swift */; };
+		2A806A0B1DD7887A0050D76E /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A806A0A1DD7887A0050D76E /* World.swift */; };
+		2A806A0D1DD7888A0050D76E /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A806A0C1DD7888A0050D76E /* Point.swift */; };
+		2A806A0F1DD788A20050D76E /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A806A0E1DD788A20050D76E /* Direction.swift */; };
+		2A806A111DD794350050D76E /* SnekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A806A101DD794350050D76E /* SnekView.swift */; };
+		2A806A131DD794430050D76E /* SnekViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A806A121DD794430050D76E /* SnekViewDelegate.swift */; };
+		2A909E351DD8FDD600A2196C /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A909E341DD8FDD600A2196C /* GameState.swift */; };
 		2ACCE43F1DD784BA0092FFD8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACCE43E1DD784BA0092FFD8 /* AppDelegate.swift */; };
 		2ACCE4411DD784BA0092FFD8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACCE4401DD784BA0092FFD8 /* ViewController.swift */; };
 		2ACCE4441DD784BA0092FFD8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2ACCE4421DD784BA0092FFD8 /* Main.storyboard */; };
@@ -26,6 +33,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2A806A081DD7885B0050D76E /* Snek.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snek.swift; sourceTree = "<group>"; };
+		2A806A0A1DD7887A0050D76E /* World.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
+		2A806A0C1DD7888A0050D76E /* Point.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
+		2A806A0E1DD788A20050D76E /* Direction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Direction.swift; sourceTree = "<group>"; };
+		2A806A101DD794350050D76E /* SnekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnekView.swift; sourceTree = "<group>"; };
+		2A806A121DD794430050D76E /* SnekViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnekViewDelegate.swift; sourceTree = "<group>"; };
+		2A909E341DD8FDD600A2196C /* GameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
 		2ACCE43B1DD784BA0092FFD8 /* Snek.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Snek.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ACCE43E1DD784BA0092FFD8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2ACCE4401DD784BA0092FFD8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -77,8 +91,15 @@
 		2ACCE43D1DD784BA0092FFD8 /* Snek */ = {
 			isa = PBXGroup;
 			children = (
+				2A806A081DD7885B0050D76E /* Snek.swift */,
+				2A806A101DD794350050D76E /* SnekView.swift */,
+				2A806A121DD794430050D76E /* SnekViewDelegate.swift */,
+				2A806A0A1DD7887A0050D76E /* World.swift */,
+				2A806A0C1DD7888A0050D76E /* Point.swift */,
+				2A806A0E1DD788A20050D76E /* Direction.swift */,
 				2ACCE43E1DD784BA0092FFD8 /* AppDelegate.swift */,
 				2ACCE4401DD784BA0092FFD8 /* ViewController.swift */,
+				2A909E341DD8FDD600A2196C /* GameState.swift */,
 				2ACCE4421DD784BA0092FFD8 /* Main.storyboard */,
 				2ACCE4451DD784BA0092FFD8 /* Assets.xcassets */,
 				2ACCE4471DD784BA0092FFD8 /* LaunchScreen.storyboard */,
@@ -201,8 +222,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A806A131DD794430050D76E /* SnekViewDelegate.swift in Sources */,
 				2ACCE4411DD784BA0092FFD8 /* ViewController.swift in Sources */,
+				2A806A111DD794350050D76E /* SnekView.swift in Sources */,
+				2A806A0D1DD7888A0050D76E /* Point.swift in Sources */,
 				2ACCE43F1DD784BA0092FFD8 /* AppDelegate.swift in Sources */,
+				2A806A0B1DD7887A0050D76E /* World.swift in Sources */,
+				2A806A091DD7885B0050D76E /* Snek.swift in Sources */,
+				2A909E351DD8FDD600A2196C /* GameState.swift in Sources */,
+				2A806A0F1DD788A20050D76E /* Direction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,6 +440,7 @@
 				2ACCE45A1DD784BA0092FFD8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2ACCE45B1DD784BA0092FFD8 /* Build configuration list for PBXNativeTarget "SnekTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +449,7 @@
 				2ACCE45D1DD784BA0092FFD8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

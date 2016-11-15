@@ -15,32 +15,33 @@ class LeaderboardViewController: UIViewController {
     @IBOutlet weak var leaderboardLabel: UILabel!
     @IBOutlet weak var board: UIView!
     @IBOutlet weak var boardPopulation: UITextView!
-    var leaderboard: Leaderboard?
+    static var leaderboard: Leaderboard?
     var receivedResult: Int?
     var name: String?
     
     // MARK: Loading
     
     override func viewDidLoad() {
-        self.leaderboard = Leaderboard()
+        //self.leaderboard = Leaderboard()
+        
         self.boardPopulation.isUserInteractionEnabled = false
         self.boardPopulation.text = ""
+        // self.boardPopulation.font?.withSize(16)
         
         self.board.layer.borderColor = UIColor.black.cgColor
         self.board.layer.borderWidth = 1.0
         self.board.layer.backgroundColor = UIColor.white.withAlphaComponent(0.0).cgColor
         
-        handleScore()
-        
-        // display()
+        // Adding the new score to the leaderboard and displays
+        promptNameIfNeeded()
     }
     
     // MARK: Score storage
     
-    /// Inserts the score in the leaderboard if needed
-    func handleScore() {
+    /// Prompts the user's name if needed
+    func promptNameIfNeeded() {
         // Adding the score
-        if self.receivedResult! > 0 && leaderboard!.newHighScore(newResult: receivedResult!) {
+        if self.receivedResult! > 0 && LeaderboardViewController.leaderboard!.newHighScore(newResult: receivedResult!) {
             // Creating the score
             let namePrompt = UIAlertController(title: "Wow, nicely done!", message: "You've got a new high score!", preferredStyle: UIAlertControllerStyle.alert)
             namePrompt.addTextField { (nameField) in
@@ -48,7 +49,7 @@ class LeaderboardViewController: UIViewController {
             }
             namePrompt.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: { (_) in
                 let player = namePrompt.textFields![0].text
-                self.dealWithNewScore(name: player!)
+                self.handleScoreFor(player: player!)
             }))
             
             self.present(namePrompt, animated: true, completion: nil)
@@ -57,15 +58,16 @@ class LeaderboardViewController: UIViewController {
         }
     }
     
-    func dealWithNewScore(name: String) {
-        self.name = name
-        self.leaderboard!.addScore(newScore: Score(result: self.receivedResult!, name: self.name!))
+    /// Inserts the score in the leaderboard and calls the display function
+    func handleScoreFor(player: String) {
+        self.name = player
+        LeaderboardViewController.leaderboard!.addScore(newScore: Score(result: self.receivedResult!, name: self.name!))
         display()
     }
     
     /// Displays the leaderboard
     func display() {
-        boardPopulation.text = self.leaderboard!.show()
+        boardPopulation.text = LeaderboardViewController.leaderboard!.show()
     }
     
 }

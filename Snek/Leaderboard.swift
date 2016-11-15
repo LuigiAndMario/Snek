@@ -13,14 +13,14 @@ class Leaderboard {
     // MARK: Properties
     
     var league: [Score]
-    static let amount: Int = 5
+    static let amount: Int = 10
     
     // MARK: Initializer
     
     init() {
         self.league = []
         for i in 0..<Leaderboard.amount {
-            league.insert(Score(result: 0, name: "NoName"), at: i)
+            league.insert(Score(result: -1, name: "Unnamed"), at: i)
         }
     }
     
@@ -42,10 +42,17 @@ class Leaderboard {
         var s: String = ""
         for i in 0..<Leaderboard.amount {
             let currentScore = league[i]
-            s += String(i + 1) + ".  "   // Position
-            s += currentScore.name! + " : " // Name
-            s += String(describing: currentScore.result!) + " fruits eaten" // Result
-            s += "\r"
+            if currentScore.result! >= 0 {
+                s += String(i + 1) + ".  "   // Position
+                s += currentScore.name! + " : " // Name
+                s += String(describing: currentScore.result!) // Result
+                if currentScore.result! == 1 {
+                    s += " fruit eaten"
+                } else {
+                    s += " fruits eaten"
+                }
+                s += "\r"
+            }
         }
         
         return s
@@ -54,12 +61,11 @@ class Leaderboard {
     // MARK: Addition
     
     /// Adds a score to the leaderboard
-    func addScore(newScore: Score) -> Bool {
+    func addScore(newScore: Score) {
         
         // If there are no high scores, we simply add one and return
         if league.isEmpty {
             league.insert(newScore, at: 0)
-            return true
         }
         
         let newResult = newScore.result!
@@ -69,14 +75,11 @@ class Leaderboard {
             let currentResult: Score = self.league[i]
             if newResult >= currentResult.result! {
                 self.league.insert(newScore, at: i)
-                return true
-                
+                break
             }
         }
         
         cut()
-        
-        return false
     }
     
     /// Cuts all the scores after the last one of the leaderboard

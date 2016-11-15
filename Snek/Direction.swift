@@ -14,6 +14,7 @@ enum Direction: Int {
     case up = 3
     case down = 4
     
+    /// Returns a boolean indicating whether the snek can change direction to newDirection
     func canChangeTo(newDirection: Direction) -> Bool {
         var canChange = false
         
@@ -29,11 +30,12 @@ enum Direction: Int {
         return canChange
     }
     
+    /// Moves the snek in the correct direction and handles the toric box
     func move(from: Point, world: World) -> Point {
         var x = from.x
         var y = from.y
         
-        // Adjusts the coordinates depending on the borderline cases
+        // Handles the case of the toric box
         switch self {
         case .left:
             x = x - 1

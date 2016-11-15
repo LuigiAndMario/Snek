@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, SnekViewDelegate {
+class GameViewController: UIViewController, SnekViewDelegate {
     
     // MARK: Properties
     
@@ -16,34 +16,47 @@ class ViewController: UIViewController, SnekViewDelegate {
     @IBOutlet weak var restartButton: UIButton!
     @IBOutlet weak var gameBox: UIView!
     @IBOutlet weak var scoreCounter: UILabel!
+    @IBOutlet weak var dieButton: UIButton!
+    @IBOutlet weak var leaderboardBarButton: UIBarButtonItem!
     var snekView: SnekView?
     var timer: Timer?
     var snek: Snek?
     var fruit: Point?
+    /// Represents the sate of the game, which is either not playing, playing, paused or finished.
     var gameState: GameState = GameState.notPlaying
-    var score: Int = 0
+    /// Constantly changes through the game.
+    var fruitsEaten: Int?
+    /// Only changes when the game is started or ends.
+    var score: Int?
     
     
-    // MARK : Overrides
+    // MARK: Overrides
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Initialising the leaderboard in the next view
+        LeaderboardViewController.leaderboard = Leaderboard()
+        
         // Defining the box in which the snek will evolve
         // The size of the frame is as defined in the storyboard
-        let frame = CGRect(x: 13, y: 120, width: 350, height: 350)
+        let frame = CGRect(x: 13, y: 164, width: 350, height: 350)
         
         // Setting the score counter to an empty string before staring to play
-        scoreCounter.text = String("")
+        scoreCounter.text = " "
+        self.fruitsEaten = 0
+        self.score = 0
         
         // Hiding the restart button
-        restartButton.isHidden = true
+        self.restartButton.isHidden = true
         
-        gameBox.frame = frame
-        gameBox.layer.borderColor = UIColor.black.cgColor
-        gameBox.layer.borderWidth = 1.0
-        // The background is set to a fully transparent gray in order to gray it out on a game over screen by increasing the alpha component
-        gameBox.layer.backgroundColor = UIColor.lightGray.withAlphaComponent(0.0).cgColor
+        // Hiding the die button if not in debug mode
+        self.dieButton.isHidden = false
+        
+        self.gameBox.frame = frame
+        self.gameBox.layer.borderColor = UIColor.black.cgColor
+        self.gameBox.layer.borderWidth = 1.0
+        self.gameBox.layer.backgroundColor = UIColor.white.withAlphaComponent(0.0).cgColor
         
         snekView = SnekView(frame: frame)
         // snekView!.autoresizingMask = .FlexibleWidth | .FlexibleHeight
@@ -67,6 +80,7 @@ class ViewController: UIViewController, SnekViewDelegate {
 
     // MARK: Gestures
     
+    /// Recognizes the gesture sent
     func swipe(gestureRecognizer: UISwipeGestureRecognizer) {
         switch gestureRecognizer.direction {
         case UISwipeGestureRecognizerDirection.left:
@@ -142,8 +156,8 @@ class ViewController: UIViewController, SnekViewDelegate {
     }
     
     func updateScore() {
-        score = snek!.fruitsEaten
-        scoreCounter.text = String(snek!.fruitsEaten)
+        self.fruitsEaten = snek!.fruitsEaten
+        scoreCounter.text = String(describing: fruitsEaten!)
     }
     
     // MARK: Button Actions
@@ -172,7 +186,8 @@ class ViewController: UIViewController, SnekViewDelegate {
     func startGame() {
         startAndPauseButton.setTitle("Pause", for: .normal)
         restartButton.isHidden = true
-        scoreCounter.text = String("0")
+        self.score = 0
+        scoreCounter.text = String(describing: self.fruitsEaten!)
         
         // If the timer is not nil, then we have a problem
         if timer != nil {
@@ -216,10 +231,47 @@ class ViewController: UIViewController, SnekViewDelegate {
         timer!.invalidate()
         timer = nil
         
-        gameBox.backgroundColor? = UIColor.lightGray.withAlphaComponent(0.5)
+        gameBox.backgroundColor? = UIColor.red.withAlphaComponent(0.3)
         
         gameState = GameState.gameOver
-        score = snek!.fruitsEaten
+        
+        self.score = fruitsEaten
+        self.fruitsEaten = 0
+        
+        // Segue for the leaderboard
+        performSegue(withIdentifier: "gameToLeaderboardSegue", sender: nil)
+        
+        gameState = GameState.notPlaying
+    }
+    
+    /// For debugging purposes only.
+    ///
+    /// Eats a fruit and abruptly ends the game.
+    ///
+    /// Does not perform any check on the game state, which might lead to errors.
+    @IBAction func dieButtonAction(_ sender: UIButton) {
+        fruitsEaten = fruitsEaten! + 1
+        endGame()
+    }
+    
+    // MARK: Segue
+    
+    /// Prepares the correct action for the segue
+    ///
+    /// Namely, if the game is currently running, pauses it and if the game is done, sets the result of the leaderboardViewController.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if gameState == GameState.playing {
+            // Pauses the game if it is currently running
+            pauseGame()
+        }
+        
+        if let destinationVC = segue.destination as? LeaderboardViewController {
+            if gameState != GameState.gameOver {
+                destinationVC.receivedResult = -1
+            } else {
+                destinationVC.receivedResult = self.score
+            }
+        }
     }
     
     // MARK: Inheritance
@@ -232,4 +284,3 @@ class ViewController: UIViewController, SnekViewDelegate {
         return fruit
     }
 }
-

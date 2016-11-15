@@ -13,12 +13,12 @@ class Score {
     // MARK: Properties
     
     var result: Int?
-    var nameOfPlayer: String?
+    var name: String?
     
     // MARK: Initializer
     
-    init(result: Int, nameOfPlayer: String) {
+    init(result: Int, name: String) {
         self.result = result
-        self.nameOfPlayer = nameOfPlayer
+        self.name = name
     }
 }

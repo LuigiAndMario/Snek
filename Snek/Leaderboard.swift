@@ -20,7 +20,7 @@ class Leaderboard {
     init() {
         self.league = []
         for i in 0..<Leaderboard.amount {
-            league.insert(Score(result: 0, nameOfPlayer: ""), at: i)
+            league.insert(Score(result: 0, name: "NoName"), at: i)
         }
     }
     
@@ -42,10 +42,10 @@ class Leaderboard {
         var s: String = ""
         for i in 0..<Leaderboard.amount {
             let currentScore = league[i]
-            s = String(i) + ".  "
-            s += currentScore.nameOfPlayer! + " : "
-            s += String(describing: currentScore.result) + " fruits eaten"
-            s += "\n"
+            s += String(i + 1) + ".  "   // Position
+            s += currentScore.name! + " : " // Name
+            s += String(describing: currentScore.result!) + " fruits eaten" // Result
+            s += "\r"
         }
         
         return s
@@ -62,23 +62,21 @@ class Leaderboard {
             return true
         }
         
-        var inserted: Bool = false
         let newResult = newScore.result!
         
         // Inserts the current score in the league
         for i in 0..<Leaderboard.amount {
-            if !inserted {
-                let currentResult: Score = self.league[i]
-                if newResult >= currentResult.result! {
-                    self.league.insert(newScore, at: i)
-                    inserted = true
-                }
+            let currentResult: Score = self.league[i]
+            if newResult >= currentResult.result! {
+                self.league.insert(newScore, at: i)
+                return true
+                
             }
         }
         
         cut()
         
-        return inserted
+        return false
     }
     
     /// Cuts all the scores after the last one of the leaderboard

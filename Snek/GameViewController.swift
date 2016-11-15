@@ -241,10 +241,11 @@ class GameViewController: UIViewController, SnekViewDelegate {
     
     /// For debugging purposes only.
     ///
-    /// Abruptly ends the game.
+    /// Eats a fruit and abruptly ends the game.
     ///
     /// Does not perform any check on the game state, which might lead to errors.
     @IBAction func dieButtonAction(_ sender: UIButton) {
+        fruitsEaten = fruitsEaten! + 1
         endGame()
     }
     

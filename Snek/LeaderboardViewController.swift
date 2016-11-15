@@ -13,7 +13,8 @@ class LeaderboardViewController: UIViewController {
     // MARK: Properties
     
     @IBOutlet weak var leaderboardLabel: UILabel!
-    @IBOutlet weak var board: UITextField!
+    @IBOutlet weak var board: UIView!
+    @IBOutlet weak var boardPopulation: UITextView!
     var leaderboard: Leaderboard?
     var receivedResult: Int?
     var name: String?
@@ -22,13 +23,19 @@ class LeaderboardViewController: UIViewController {
     
     override func viewDidLoad() {
         self.leaderboard = Leaderboard()
+        self.boardPopulation.isUserInteractionEnabled = false
+        self.boardPopulation.text = ""
+        
+        self.board.layer.borderColor = UIColor.black.cgColor
+        self.board.layer.borderWidth = 1.0
+        self.board.layer.backgroundColor = UIColor.white.withAlphaComponent(0.0).cgColor
         
         handleScore()
         
-        // populate the leaderboard
+        // display()
     }
     
-    // MARK: Score computation
+    // MARK: Score storage
     
     /// Inserts the score in the leaderboard if needed
     func handleScore() {
@@ -40,12 +47,25 @@ class LeaderboardViewController: UIViewController {
                 nameField.text = UIDevice.current.name
             }
             namePrompt.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: { (_) in
-                self.name = namePrompt.textFields![0].text
-                self.leaderboard!.addScore(newScore: Score(result: self.receivedResult!, nameOfPlayer: self.name!))
+                let player = namePrompt.textFields![0].text
+                self.dealWithNewScore(name: player!)
             }))
             
             self.present(namePrompt, animated: true, completion: nil)
+        } else {
+            display()
         }
+    }
+    
+    func dealWithNewScore(name: String) {
+        self.name = name
+        self.leaderboard!.addScore(newScore: Score(result: self.receivedResult!, name: self.name!))
+        display()
+    }
+    
+    /// Displays the leaderboard
+    func display() {
+        boardPopulation.text = self.leaderboard!.show()
     }
     
 }

@@ -35,8 +35,7 @@ class GameViewController: UIViewController, SnekViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Initialising the leaderboard in the next view
-        LeaderboardViewController.leaderboard = Leaderboard()
+        
         
         // Defining the box in which the snek will evolve
         // The size of the frame is as defined in the storyboard
@@ -256,9 +255,7 @@ class GameViewController: UIViewController, SnekViewDelegate {
     
     // MARK: Segue
     
-    /// Prepares the correct action for the segue
-    ///
-    /// Namely, if the game is currently running, pauses it and if the game is done, sets the result of the leaderboardViewController.
+    /// If the game is currently running, pauses it and if the game is done, sets the result of the leaderboardViewController.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if gameState == GameState.playing {
             // Pauses the game if it is currently running

@@ -26,7 +26,7 @@ class SnekView : UIView {
         self.backgroundColor = UIColor.white
     }
     
-    // MARK: Drawing
+    // MARK: - Drawing
     
     /// Draws the world in which the snek will evolve, the snek itself and the fruit
     override func draw(_ rect: CGRect) {

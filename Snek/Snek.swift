@@ -38,7 +38,7 @@ class Snek {
         lockedDirection = false
     }
     
-    // MARK: Movement
+    // MARK: - Movement
     
     /// Moves the snek
     ///

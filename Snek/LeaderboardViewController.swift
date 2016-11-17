@@ -12,7 +12,6 @@ class LeaderboardViewController: UIViewController {
     
     // MARK: Properties
     
-    @IBOutlet weak var leaderboardLabel: UILabel!
     @IBOutlet weak var board: UIView!
     @IBOutlet weak var boardPopulation: UITextView!
     static var leaderboard: Leaderboard?
@@ -21,8 +20,25 @@ class LeaderboardViewController: UIViewController {
     
     // MARK: Loading
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 20
+        let attributes = [NSParagraphStyleAttributeName : style]
+        boardPopulation.attributedText = NSAttributedString(string: boardPopulation.text, attributes:attributes)
+        boardPopulation.setContentOffset(CGPoint.zero, animated: false)
+    }
+    
     override func viewDidLoad() {
-        //self.leaderboard = Leaderboard()
+        self.title = "Leaderboard"
+        
+        // Initialising the leaderboard in the current view
+        if let savedLeaderboard = loadLeaderboard() {
+            LeaderboardViewController.leaderboard = savedLeaderboard
+        } else {
+            LeaderboardViewController.leaderboard = Leaderboard(league: [])
+        }
         
         self.boardPopulation.isUserInteractionEnabled = false
         self.boardPopulation.text = ""
@@ -36,7 +52,7 @@ class LeaderboardViewController: UIViewController {
         promptNameIfNeeded()
     }
     
-    // MARK: Score storage
+    // MARK: - Score storage
     
     /// Prompts the user's name if needed
     func promptNameIfNeeded() {
@@ -61,13 +77,33 @@ class LeaderboardViewController: UIViewController {
     /// Inserts the score in the leaderboard and calls the display function
     func handleScoreFor(player: String) {
         self.name = player
-        LeaderboardViewController.leaderboard!.addScore(newScore: Score(result: self.receivedResult!, name: self.name!))
+        LeaderboardViewController.leaderboard!.addScore(newScore: Score(name: self.name!, result: self.receivedResult!))
         display()
     }
     
     /// Displays the leaderboard
     func display() {
+        saveLeaderboard()
         boardPopulation.text = LeaderboardViewController.leaderboard!.show()
     }
     
+    // MARK: - Navigation
+    
+    /// Saves the leaderboard before leaving the view
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        saveLeaderboard()
+    }
+    
+    // MARK: - NSCoding
+    
+    func saveLeaderboard() {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(LeaderboardViewController.leaderboard!, toFile: Score.ArchiveURL.path)
+        if !isSuccessfulSave {
+            print("Failed to save")
+        }
+    }
+    
+    func loadLeaderboard() -> Leaderboard? {
+        return NSKeyedUnarchiver.unarchiveObject(withFile: Leaderboard.ArchiveURL.path) as? Leaderboard
+    }
 }

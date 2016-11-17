@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A3603461DDB4299002CF00F /* PropertyKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3603451DDB4299002CF00F /* PropertyKey.swift */; };
 		2A48D3981DD99B4600EE6F1A /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A48D3971DD99B4600EE6F1A /* Score.swift */; };
 		2A48D39A1DD9A76600EE6F1A /* Leaderboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A48D3991DD9A76600EE6F1A /* Leaderboard.swift */; };
 		2A48D3A31DD9F31200EE6F1A /* LeaderboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A48D3A21DD9F31200EE6F1A /* LeaderboardViewController.swift */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2A3603451DDB4299002CF00F /* PropertyKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyKey.swift; sourceTree = "<group>"; };
 		2A48D3971DD99B4600EE6F1A /* Score.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
 		2A48D3991DD9A76600EE6F1A /* Leaderboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Leaderboard.swift; sourceTree = "<group>"; };
 		2A48D3A21DD9F31200EE6F1A /* LeaderboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderboardViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +85,14 @@
 				2A48D3A21DD9F31200EE6F1A /* LeaderboardViewController.swift */,
 			);
 			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		2A3603441DDB428B002CF00F /* Encoding */ = {
+			isa = PBXGroup;
+			children = (
+				2A3603451DDB4299002CF00F /* PropertyKey.swift */,
+			);
+			name = Encoding;
 			sourceTree = "<group>";
 		};
 		2A48D39C1DD9A9E900EE6F1A /* Score */ = {
@@ -136,6 +146,7 @@
 		2ACCE43D1DD784BA0092FFD8 /* Snek */ = {
 			isa = PBXGroup;
 			children = (
+				2A3603441DDB428B002CF00F /* Encoding */,
 				2A48D39E1DD9BB0D00EE6F1A /* Graphics */,
 				2A48D39D1DD9BAEB00EE6F1A /* Game Items */,
 				2ACCE43E1DD784BA0092FFD8 /* AppDelegate.swift */,
@@ -274,6 +285,7 @@
 				2A806A0B1DD7887A0050D76E /* World.swift in Sources */,
 				2A806A091DD7885B0050D76E /* Snek.swift in Sources */,
 				2A909E351DD8FDD600A2196C /* GameState.swift in Sources */,
+				2A3603461DDB4299002CF00F /* PropertyKey.swift in Sources */,
 				2A806A0F1DD788A20050D76E /* Direction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

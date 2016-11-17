@@ -35,8 +35,6 @@ class GameViewController: UIViewController, SnekViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         // Defining the box in which the snek will evolve
         // The size of the frame is as defined in the storyboard
         let frame = CGRect(x: 13, y: 164, width: 350, height: 350)
@@ -50,7 +48,7 @@ class GameViewController: UIViewController, SnekViewDelegate {
         self.restartButton.isHidden = true
         
         // Hiding the die button if not in debug mode
-        self.dieButton.isHidden = false
+        self.dieButton.isHidden = true
         
         self.gameBox.frame = frame
         self.gameBox.layer.borderColor = UIColor.black.cgColor

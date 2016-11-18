@@ -20,16 +20,6 @@ class LeaderboardViewController: UIViewController {
     
     // MARK: Loading
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        let style = NSMutableParagraphStyle()
-        style.lineSpacing = 20
-        let attributes = [NSParagraphStyleAttributeName : style]
-        boardPopulation.attributedText = NSAttributedString(string: boardPopulation.text, attributes:attributes)
-        boardPopulation.setContentOffset(CGPoint.zero, animated: false)
-    }
-    
     override func viewDidLoad() {
         self.title = "Leaderboard"
         
@@ -42,7 +32,11 @@ class LeaderboardViewController: UIViewController {
         
         self.boardPopulation.isUserInteractionEnabled = false
         self.boardPopulation.text = ""
-        // self.boardPopulation.font?.withSize(16)
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 20
+        let attributes = [NSParagraphStyleAttributeName : style]
+        boardPopulation.attributedText = NSAttributedString(string: boardPopulation.text, attributes:attributes)
+        boardPopulation.setContentOffset(CGPoint.zero, animated: false)
         
         self.board.layer.borderColor = UIColor.black.cgColor
         self.board.layer.borderWidth = 1.0
@@ -54,24 +48,38 @@ class LeaderboardViewController: UIViewController {
     
     // MARK: - Score storage
     
+    weak var actionToEnable: UIAlertAction?
+    
     /// Prompts the user's name if needed
     func promptNameIfNeeded() {
         // Adding the score
         if self.receivedResult! > 0 && LeaderboardViewController.leaderboard!.newHighScore(newResult: receivedResult!) {
+            
             // Creating the score
             let namePrompt = UIAlertController(title: "Wow, nicely done!", message: "You've got a new high score!", preferredStyle: UIAlertControllerStyle.alert)
+            
             namePrompt.addTextField { (nameField) in
-                nameField.text = UIDevice.current.name
+                // nameField.text = ""
+                nameField.addTarget(self, action: #selector(self.textChanged(_:)), for: .editingChanged)
             }
-            namePrompt.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: { (_) in
+            
+            let doneAction = UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: { (_) in
                 let player = namePrompt.textFields![0].text
                 self.handleScoreFor(player: player!)
-            }))
+            })
+            doneAction.isEnabled = false
+            self.actionToEnable = doneAction
+            
+            namePrompt.addAction(doneAction)
             
             self.present(namePrompt, animated: true, completion: nil)
         } else {
             display()
         }
+    }
+    
+    func textChanged(_ sender: UITextField) {
+        self.actionToEnable?.isEnabled = (sender.text! != "")
     }
     
     /// Inserts the score in the leaderboard and calls the display function
@@ -84,14 +92,13 @@ class LeaderboardViewController: UIViewController {
     /// Displays the leaderboard
     func display() {
         saveLeaderboard()
-        boardPopulation.text = LeaderboardViewController.leaderboard!.show()
-    }
-    
-    // MARK: - Navigation
-    
-    /// Saves the leaderboard before leaving the view
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        saveLeaderboard()
+        
+        self.boardPopulation.text = LeaderboardViewController.leaderboard!.show()
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 20
+        let attributes = [NSParagraphStyleAttributeName : style]
+        boardPopulation.attributedText = NSAttributedString(string: boardPopulation.text, attributes:attributes)
+        boardPopulation.setContentOffset(CGPoint.zero, animated: false)
     }
     
     // MARK: - NSCoding

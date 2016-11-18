@@ -35,36 +35,15 @@ enum Direction: Int {
         var x = from.x
         var y = from.y
         
-        // Handles the case of the toric box
         switch self {
         case .left:
-            x = x - 1
-            // Going left when at the leftmost point
-            if x < 0 {
-                // Reappearing on the right
-                x = world.width
-            }
+            x = (world.width + x - 1) % world.width
         case .right:
-            x = x + 1
-            // Going right when at the rightmost point
-            if x > world.width {
-                // Reappearing on the left
-                x = 0
-            }
+            x = (world.width + x + 1) % world.width
         case .up:
-            y = y + 1
-            // Going up when at the upmost point
-            if y > world.height {
-                // Reappearing down
-                y = 0
-            }
+            y = (world.height + y + 1) % world.height
         case .down:
-            y = y - 1
-            // Going up down at the downmost point
-            if y < 0 {
-                // Reappearing up
-                y = world.height
-            }
+            y = (world.height + y - 1) % world.height
         }
         
         return Point(x: x, y: y)

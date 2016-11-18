@@ -42,7 +42,7 @@ class Snek {
     
     /// Moves the snek
     ///
-    /// Delegates to Direction.move()
+    /// Delegates to Direction.move(from:world:)
     func move() {
         self.points.removeLast()
         let head = self.direction.move(from: points[0], world: self.world)

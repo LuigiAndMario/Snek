@@ -48,7 +48,7 @@ class GameViewController: UIViewController, SnekViewDelegate {
         self.restartButton.isHidden = true
         
         // Hiding the die button if not in debug mode
-        self.dieButton.isHidden = true
+        self.dieButton.isHidden = false
         
         self.gameBox.frame = frame
         self.gameBox.layer.borderColor = UIColor.black.cgColor
@@ -251,7 +251,7 @@ class GameViewController: UIViewController, SnekViewDelegate {
         endGame()
     }
     
-    // MARK: Segue
+    // MARK: - Navigation
     
     /// If the game is currently running, pauses it and if the game is done, sets the result of the leaderboardViewController.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

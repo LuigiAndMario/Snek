@@ -20,6 +20,11 @@ class LeaderboardViewController: UIViewController {
     
     // MARK: Loading
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        boardPopulation.setContentOffset(CGPoint.zero, animated: false)
+    }
+    
     override func viewDidLoad() {
         self.title = "Leaderboard"
         
@@ -94,6 +99,7 @@ class LeaderboardViewController: UIViewController {
         saveLeaderboard()
         
         self.boardPopulation.text = LeaderboardViewController.leaderboard!.show()
+        // Resets the style of the UITextView
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 20
         let attributes = [NSParagraphStyleAttributeName : style]

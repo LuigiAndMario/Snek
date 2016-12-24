@@ -48,7 +48,7 @@ class GameViewController: UIViewController, SnekViewDelegate {
         self.restartButton.isHidden = true
         
         // Hiding the die button if not in debug mode
-        self.dieButton.isHidden = false
+        self.dieButton.isHidden = true
         
         self.gameBox.frame = frame
         self.gameBox.layer.borderColor = UIColor.black.cgColor
